@@ -20,18 +20,21 @@ import com.codecool.seasonalproductdiscounter.service.transactions.simulator.Tra
 import com.codecool.seasonalproductdiscounter.service.users.UserRepository;
 
 import java.io.Console;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
 public class Application {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         Logger logger = new ConsoleLogger();
 
-        String dbFile = "src/main/resources/SeasonalProductDiscounter.db";
+        String dbFile = "src/main/resources/SeasonalProductDiscounter2.db";
         SqliteConnector sqliteConnector = new SqliteConnector(dbFile, logger);
-        sqliteConnector.getConnection();
+        Connection connection = sqliteConnector.getConnection();
+        connection.close();
         DatabaseManager dbManager = new DatabaseManagerImpl(sqliteConnector, logger);
 
         DiscountProvider discountProvider = new DiscountProviderImpl();
@@ -53,7 +56,6 @@ public class Application {
         System.out.println("Press any key to exit.");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
-
 
     }
 

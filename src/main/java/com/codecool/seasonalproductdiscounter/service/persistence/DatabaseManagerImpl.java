@@ -14,18 +14,18 @@ public class DatabaseManagerImpl implements DatabaseManager {
 
     private static final String PRODUCTS_TABLE_STATEMENT = String.format(
             "CREATE TABLE IF NOT EXISTS %s ("  +
-                    "id INTEGER PRIMARY KEY NOT NULL UNIQUE AUTOINCREMENT, " +
+                    "id INTEGER PRIMARY KEY, " +
                     "name TEXT NOT NULL," +
-                    "color TEXT NOT NULL" +
-                    "season TEXT NOT NULL" +
-                    "price REAL NOT NULL" +
+                    "color TEXT NOT NULL," +
+                    "season TEXT NOT NULL," +
+                    "price REAL NOT NULL," +
                     "sold INTEGER NOT NULL);"
             ,PRODUCTS_TABLE_NAME
     );
 
     private static final String USERS_TABLE_STATEMENT = String.format(
             "CREATE TABLE IF NOT EXISTS %s (" +
-                    "id INTEGER UNIQUE NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                    "id INTEGER PRIMARY KEY, " +
                     "user_name TEXT NOT NULL UNIQUE," +
                     "password TEXT NOT NULL);"
             , USERS_TABLE_NAME
@@ -61,7 +61,7 @@ public class DatabaseManagerImpl implements DatabaseManager {
             Connection connection = sqliteConnector.getConnection();
             for(String query : queries){
                 Statement statement = connection.createStatement();
-                statement.executeQuery(query);
+                statement.execute(query);
             }
         } catch (SQLException e) {
             logger.logError(e.getMessage());
