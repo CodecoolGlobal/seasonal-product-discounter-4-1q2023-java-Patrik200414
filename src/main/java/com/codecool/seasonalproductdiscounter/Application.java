@@ -15,6 +15,7 @@ import com.codecool.seasonalproductdiscounter.service.persistence.DatabaseManage
 import com.codecool.seasonalproductdiscounter.service.persistence.SqliteConnector;
 import com.codecool.seasonalproductdiscounter.service.products.provider.RandomProductGenerator;
 import com.codecool.seasonalproductdiscounter.service.products.repository.ProductRepository;
+import com.codecool.seasonalproductdiscounter.service.products.repository.ProductRepositoryImpl;
 import com.codecool.seasonalproductdiscounter.service.transactions.repository.TransactionRepository;
 import com.codecool.seasonalproductdiscounter.service.transactions.simulator.TransactionsSimulator;
 import com.codecool.seasonalproductdiscounter.service.users.UserRepository;
@@ -41,7 +42,7 @@ public class Application {
         DiscountService discounterService = new DiscountServiceImpl(discountProvider);
         AuthenticationService authenticationService = new AuthenticationServiceImpl();
 
-        ProductRepository productRepository = null;
+        ProductRepository productRepository = new ProductRepositoryImpl(logger,sqliteConnector);
         UserRepository userRepository = null;
         TransactionRepository transactionRepository = null;
 
