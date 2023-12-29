@@ -53,22 +53,34 @@ public class UserRepositoryImpl implements UserRepository{
         Connection connection = sqliteConnector.getConnection();
         User searchedUser = null;
         try{
-            logger.logInfo("Searching for " + searchedUserName + " user!");
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.setString(1, searchedUserName);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()){
-                int id = resultSet.getInt("id");
-                String userName = resultSet.getString("user_name");
-                String password = resultSet.getString("password");
-
-                User user = new User(id, userName, password);
-                searchedUser = user;
-            }
-
+            searchedUser = collectUserByUserName(searchedUserName, connection, sqlQuery);
         } catch (SQLException e){
             logger.logError(e.getMessage());
+        }
+        return searchedUser;
+    }
+
+
+    public User collectUserByUserName(String searchedUserName, Connection connection, String sqlQuery) throws SQLException {
+        logger.logInfo("Searching for " + searchedUserName + " user!");
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+        preparedStatement.setString(1, searchedUserName);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        User searchedUser = null;
+        searchedUser = convertResultSetToUser(resultSet, searchedUser);
+
+        return searchedUser;
+    }
+
+    private static User convertResultSetToUser(ResultSet resultSet, User searchedUser) throws SQLException {
+        while (resultSet.next()){
+            int id = resultSet.getInt("id");
+            String userName = resultSet.getString("user_name");
+            String password = resultSet.getString("password");
+
+            User user = new User(id, userName, password);
+            searchedUser = user;
         }
         return searchedUser;
     }
@@ -80,15 +92,20 @@ public class UserRepositoryImpl implements UserRepository{
         boolean success = false;
         try{
             logger.logInfo("Adding user to the database!");
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.setInt(1, user.id());
-            preparedStatement.setString(2, user.userName());
-            preparedStatement.setString(3, user.password());
-
-            success = preparedStatement.execute();
+            success = addUserQuerySuccess(user, connection, sqlQuery, success);
         } catch (SQLException e){
             logger.logError(e.getMessage());
         }
+        return success;
+    }
+
+    private static boolean addUserQuerySuccess(User user, Connection connection, String sqlQuery, boolean success) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+        preparedStatement.setInt(1, user.id());
+        preparedStatement.setString(2, user.userName());
+        preparedStatement.setString(3, user.password());
+
+        success = preparedStatement.execute();
         return success;
     }
 
@@ -100,11 +117,7 @@ public class UserRepositoryImpl implements UserRepository{
 
         try{
             logger.logInfo("Updating " + user + " --> new user name: " + userName);
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.setString(1, userName);
-            preparedStatement.setInt(2, user.id());
-
-            success = preparedStatement.execute();
+            success = changeUserDataSuccess(user, userName, connection, sqlQuery);
         } catch (SQLException e){
             logger.logError(e.getMessage());
         }
@@ -112,8 +125,29 @@ public class UserRepositoryImpl implements UserRepository{
         return success;
     }
 
+
     @Override
     public boolean changePassword(User user, String password) {
-        return false;
+        String sqlQuery = "UPDATE users SET password = ? WHERE id = ?;";
+        Connection connection = sqliteConnector.getConnection();
+        boolean success = false;
+
+        try{
+            logger.logInfo("Updating " + user.userName() + "'s password!");
+            success = changeUserDataSuccess(user, password, connection, sqlQuery);
+        } catch (SQLException e){
+            logger.logInfo(e.getMessage());
+        }
+
+        return success;
     }
+
+    private boolean changeUserDataSuccess(User user, String newData, Connection connection, String sqlQuery) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+        preparedStatement.setString(1, newData);
+        preparedStatement.setInt(2, user.id());
+        return preparedStatement.execute();
+    }
+
+
 }
