@@ -17,16 +17,16 @@ public class SqliteConnector {
     }
 
     public Connection getConnection() {
-        Connection conn;
+        Connection conn = null;
         try {
             // Complete the method
-            conn = DriverManager.getConnection(dbFile);
+            conn = DriverManager.getConnection("jdbc:sqlite:" + dbFile);
             logger.logInfo("The connection was created!");
-            return conn;
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return null;
+        return conn;
     }
 }
