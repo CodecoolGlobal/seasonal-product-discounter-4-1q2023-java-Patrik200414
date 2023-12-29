@@ -4,10 +4,7 @@ import com.codecool.seasonalproductdiscounter.model.users.User;
 import com.codecool.seasonalproductdiscounter.service.logger.Logger;
 import com.codecool.seasonalproductdiscounter.service.persistence.SqliteConnector;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,23 +23,16 @@ public class UserRepositoryImpl implements UserRepository{
         Connection connection = sqliteConnector.getConnection();
         List<User> users = new ArrayList<>();
         try{
+            logger.logInfo("Collecting users from the database!");
             collectUsers(connection, sqlQuery, users);
         } catch (SQLException e){
             logger.logError(e.getMessage());
         }
 
-        getUsersLogInfo(users);
 
         return users;
     }
 
-    private void getUsersLogInfo(List<User> users) {
-        if(users.size() > 0){
-            logger.logInfo("All users have been collected (" + users.size() +")");
-        } else{
-            logger.logInfo("There is no users in the database");
-        }
-    }
 
     private static void collectUsers(Connection connection, String sqlQuery, List<User> users) throws SQLException {
         Statement statement = connection.createStatement();
@@ -58,8 +48,29 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public User getUserByUserName(String userName) {
-        return null;
+    public User getUserByUserName(String searchedUserName) {
+        String sqlQuery = "SELECT * FROM users WHERE user_name = ?";
+        Connection connection = sqliteConnector.getConnection();
+        User searchedUser = null;
+        try{
+            logger.logInfo("Searching for " + searchedUserName + " user!");
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, searchedUserName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String userName = resultSet.getString("user_name");
+                String password = resultSet.getString("password");
+
+                User user = new User(id, userName, password);
+                searchedUser = user;
+            }
+
+        } catch (SQLException e){
+            logger.logError(e.getMessage());
+        }
+        return searchedUser;
     }
 
     @Override
