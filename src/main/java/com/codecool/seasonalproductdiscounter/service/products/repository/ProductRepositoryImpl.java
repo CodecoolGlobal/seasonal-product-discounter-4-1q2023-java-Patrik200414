@@ -110,6 +110,25 @@ public class ProductRepositoryImpl implements ProductRepository{
 
     @Override
     public boolean setProductAsSold(Product product) {
-        return false;
+        String sqlQuery = "UPDATE products SET sold = 1 WHERE id = ?;";
+        Connection connection = sqliteConnector.getConnection();
+        boolean updateSuccess = false;
+
+        try{
+            updateSuccess = updatingTheSoldField(product, connection, sqlQuery, updateSuccess);
+        } catch (SQLException e){
+            logger.logError(e.getMessage());
+        }
+
+
+        return updateSuccess;
+    }
+
+    private boolean updatingTheSoldField(Product product, Connection connection, String sqlQuery, boolean updateSuccess) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+        preparedStatement.setInt(1, product.id());
+        updateSuccess = preparedStatement.execute();
+        logger.logInfo("Product " + product.id() + "|" + product.name() + "Has been sold!");
+        return updateSuccess;
     }
 }
