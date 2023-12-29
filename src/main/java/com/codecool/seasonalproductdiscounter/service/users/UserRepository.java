@@ -5,11 +5,6 @@ import com.codecool.seasonalproductdiscounter.model.users.User;
 import java.util.List;
 
 public interface UserRepository {
-    /*
-    List<Product> getAvailableProducts();
-    boolean addProducts(List<Product> products);
-    boolean setProductAsSold(Product product);
-    * */
 
     List<User> getUsers();
     User getUserByUserName(String userName);
