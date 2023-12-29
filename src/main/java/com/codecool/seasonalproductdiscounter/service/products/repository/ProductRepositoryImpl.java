@@ -128,7 +128,7 @@ public class ProductRepositoryImpl implements ProductRepository{
         PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
         preparedStatement.setInt(1, product.id());
         updateSuccess = preparedStatement.execute();
-        logger.logInfo("Product " + product.id() + "|" + product.name() + "Has been sold!");
+        logger.logInfo("Product " + product.id() + "|" + product.name() + " Has been sold!");
         return updateSuccess;
     }
 }
