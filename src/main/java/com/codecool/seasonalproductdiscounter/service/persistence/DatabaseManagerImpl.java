@@ -12,9 +12,24 @@ public class DatabaseManagerImpl implements DatabaseManager {
     public static final String USERS_TABLE_NAME = "users";
     public static final String TRANSACTIONS_TABLE_NAME = "transactions";
 
-    private static final String PRODUCTS_TABLE_STATEMENT = "";
+    private static final String PRODUCTS_TABLE_STATEMENT = String.format(
+            "CREATE TABLE IF NOT EXISTS %s ("  +
+                    "id INTEGER PRIMARY KEY NOT NULL UNIQUE AUTOINCREMENT, " +
+                    "name TEXT NOT NULL," +
+                    "color TEXT NOT NULL" +
+                    "season TEXT NOT NULL" +
+                    "price REAL NOT NULL" +
+                    "sold INTEGER NOT NULL);"
+            ,PRODUCTS_TABLE_NAME
+    );
 
-    private static final String USERS_TABLE_STATEMENT ="";
+    private static final String USERS_TABLE_STATEMENT = String.format(
+            "CREATE TABLE IF NOT EXISTS %s (" +
+                    "id INTEGER UNIQUE NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                    "user_name TEXT NOT NULL UNIQUE," +
+                    "password TEXT NOT NULL);"
+            , USERS_TABLE_NAME
+    );
 
     private static final String TRANSACTIONS_TABLE_STATEMENT =
             String.format("CREATE TABLE IF NOT EXISTS %s (" +
@@ -43,6 +58,11 @@ public class DatabaseManagerImpl implements DatabaseManager {
     private boolean executeQueries(Iterable<String> queries) {
         try {
             //Complete the method
+            Connection connection = sqliteConnector.getConnection();
+            for(String query : queries){
+                Statement statement = connection.createStatement();
+                statement.executeQuery(query);
+            }
         } catch (SQLException e) {
             logger.logError(e.getMessage());
             return false;
