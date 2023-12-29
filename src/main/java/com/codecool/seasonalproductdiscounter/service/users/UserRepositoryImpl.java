@@ -94,7 +94,22 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public boolean changeUserName(User user, String userName) {
-        return false;
+        String sqlQuery = "UPDATE users SET user_name = ? WHERE id = ?;";
+        Connection connection = sqliteConnector.getConnection();
+        boolean success = false;
+
+        try{
+            logger.logInfo("Updating " + user + " --> new user name: " + userName);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, userName);
+            preparedStatement.setInt(2, user.id());
+
+            success = preparedStatement.execute();
+        } catch (SQLException e){
+            logger.logError(e.getMessage());
+        }
+
+        return success;
     }
 
     @Override
