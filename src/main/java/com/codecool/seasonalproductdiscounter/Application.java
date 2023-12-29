@@ -1,5 +1,6 @@
 package com.codecool.seasonalproductdiscounter;
 
+import com.codecool.seasonalproductdiscounter.model.products.Product;
 import com.codecool.seasonalproductdiscounter.model.transactions.Transaction;
 import com.codecool.seasonalproductdiscounter.model.transactions.TransactionsSimulatorSettings;
 import com.codecool.seasonalproductdiscounter.service.authentication.AuthenticationService;
@@ -62,8 +63,10 @@ public class Application {
 
     private static void initializeDatabase(ProductRepository productRepository) {
         if (productRepository.getAvailableProducts().isEmpty()) {
-            RandomProductGenerator randomProductGenerator = new RandomProductGenerator(1000, 20, 80);
             //Add products to the repo
+            RandomProductGenerator randomProductGenerator = new RandomProductGenerator(1000, 20, 80);
+            List<Product> randomProducts = randomProductGenerator.getProducts();
+            productRepository.addProducts(randomProducts);
         }
     }
 
