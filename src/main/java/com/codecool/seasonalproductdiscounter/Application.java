@@ -18,8 +18,10 @@ import com.codecool.seasonalproductdiscounter.service.products.provider.RandomPr
 import com.codecool.seasonalproductdiscounter.service.products.repository.ProductRepository;
 import com.codecool.seasonalproductdiscounter.service.products.repository.ProductRepositoryImpl;
 import com.codecool.seasonalproductdiscounter.service.transactions.repository.TransactionRepository;
+import com.codecool.seasonalproductdiscounter.service.transactions.repository.TransactionRepositoryImpl;
 import com.codecool.seasonalproductdiscounter.service.transactions.simulator.TransactionsSimulator;
 import com.codecool.seasonalproductdiscounter.service.users.UserRepository;
+import com.codecool.seasonalproductdiscounter.service.users.UserRepositoryImpl;
 
 import java.io.Console;
 import java.sql.Connection;
@@ -44,8 +46,8 @@ public class Application {
         AuthenticationService authenticationService = new AuthenticationServiceImpl();
 
         ProductRepository productRepository = new ProductRepositoryImpl(logger,sqliteConnector);
-        UserRepository userRepository = null;
-        TransactionRepository transactionRepository = null;
+        UserRepository userRepository = new UserRepositoryImpl(logger, sqliteConnector);
+        TransactionRepository transactionRepository = new TransactionRepositoryImpl(logger, sqliteConnector);
 
         dbManager.createTables();
         initializeDatabase(productRepository);
