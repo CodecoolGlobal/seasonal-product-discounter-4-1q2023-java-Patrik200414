@@ -31,7 +31,7 @@ public class Application {
 
         Logger logger = new ConsoleLogger();
 
-        String dbFile = "src/main/resources/SeasonalProductDiscounter2.db";
+        String dbFile = "src/main/resources/SeasonalProductDiscounter.db";
         SqliteConnector sqliteConnector = new SqliteConnector(dbFile, logger);
         Connection connection = sqliteConnector.getConnection();
         connection.close();
