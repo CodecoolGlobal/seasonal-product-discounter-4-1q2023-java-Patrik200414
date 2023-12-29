@@ -75,7 +75,21 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public boolean addUser(User user) {
-        return false;
+        String sqlQuery = "INSERT INTO users VALUES(?, ?, ?);";
+        Connection connection = sqliteConnector.getConnection();
+        boolean success = false;
+        try{
+            logger.logInfo("Adding user to the database!");
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, user.id());
+            preparedStatement.setString(2, user.userName());
+            preparedStatement.setString(3, user.password());
+
+            success = preparedStatement.execute();
+        } catch (SQLException e){
+            logger.logError(e.getMessage());
+        }
+        return success;
     }
 
     @Override
