@@ -34,8 +34,8 @@ public class Application {
 
         String dbFile = "src/main/resources/SeasonalProductDiscounter.db";
         SqliteConnector sqliteConnector = new SqliteConnector(dbFile, logger);
-        Connection connection = sqliteConnector.getConnection();
-        connection.close();
+        sqliteConnector.getConnection();
+
         DatabaseManager dbManager = new DatabaseManagerImpl(sqliteConnector, logger);
 
         DiscountProvider discountProvider = new DiscountProviderImpl();
