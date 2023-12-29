@@ -3,6 +3,7 @@ package com.codecool.seasonalproductdiscounter.service.persistence;
 import com.codecool.seasonalproductdiscounter.service.logger.Logger;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SqliteConnector {
@@ -19,7 +20,9 @@ public class SqliteConnector {
         Connection conn;
         try {
             // Complete the method
-
+            conn = DriverManager.getConnection(dbFile);
+            logger.logInfo("The connection was created!");
+            return conn;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
