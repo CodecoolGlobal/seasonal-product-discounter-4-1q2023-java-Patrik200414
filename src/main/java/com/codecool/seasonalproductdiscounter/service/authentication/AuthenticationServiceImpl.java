@@ -19,9 +19,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public boolean authenticate(User user) {
-        boolean isValidUser = false;
         logger.logInfo("Authenticating user!");
         User searchedUser = userRepository.getUserByUserName(user.userName());
+        boolean isValidUser = userChecking(user, searchedUser);
+        return isValidUser;
+    }
+
+    private boolean userChecking(User user, User searchedUser) {
+        boolean isValidUser = false;
         if(searchedUser == null){
             logger.logError("No user found with user name: " + user.userName());
         }else if(!user.password().equals(searchedUser.password())){
