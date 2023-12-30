@@ -1,22 +1,41 @@
 package com.codecool.seasonalproductdiscounter.service.authentication;
 
 import com.codecool.seasonalproductdiscounter.model.users.User;
+import com.codecool.seasonalproductdiscounter.service.logger.Logger;
+import com.codecool.seasonalproductdiscounter.service.users.UserRepository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
-    private final Map<String, String> userNamesToPasswords = new HashMap<>() {{
-        put("user1", "1234");
-        put("user2", "4567");
-        put("admin", "admin");
-    }};
+
+    private final UserRepository userRepository;
+    private final Logger logger;
+
+    public AuthenticationServiceImpl(UserRepository userRepository, Logger logger) {
+        this.userRepository = userRepository;
+        this.logger = logger;
+    }
 
     public boolean authenticate(User user) {
-        return userNamesToPasswords.entrySet()
-                .stream()
-                .anyMatch(entry -> entry.getKey().equals(user.userName())
-                        && entry.getValue().equals(user.password()));
+        logger.logInfo("Authenticating user!");
+        User searchedUser = userRepository.getUserByUserName(user.userName());
+        boolean isValidUser = userChecking(user, searchedUser);
+        return isValidUser;
+    }
+
+    private boolean userChecking(User user, User searchedUser) {
+        boolean isValidUser = false;
+        if(searchedUser == null){
+            logger.logError("No user found with user name: " + user.userName());
+        }else if(!user.password().equals(searchedUser.password())){
+            logger.logError("Invalid password for " + user.userName() + "!");
+        }else {
+            logger.logInfo(user.userName() + " is a valid user!");
+            isValidUser = true;
+        }
+        return isValidUser;
     }
 }
 
