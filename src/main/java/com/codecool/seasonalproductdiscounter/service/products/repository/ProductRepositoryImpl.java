@@ -131,4 +131,20 @@ public class ProductRepositoryImpl implements ProductRepository{
         logger.logInfo("Product " + product.id() + "|" + product.name() + " Has been sold!");
         return updateSuccess;
     }
+
+    @Override
+    public boolean setSoldToUnsold() {
+        String sqlQuery = "UPDATE products SET sold = 0";
+        Connection connection = sqliteConnector.getConnection();
+        boolean success = false;
+
+        try{
+            Statement statement = connection.createStatement();
+            statement.execute(sqlQuery);
+            success = true;
+        } catch (SQLException e){
+            logger.logError(e.getMessage());
+        }
+        return success;
+    }
 }

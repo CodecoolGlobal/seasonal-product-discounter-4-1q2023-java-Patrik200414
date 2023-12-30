@@ -21,8 +21,6 @@ public class SqliteConnector {
         try {
             // Complete the method
             conn = DriverManager.getConnection("jdbc:sqlite:" + dbFile);
-            logger.logInfo("The connection was created!");
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
