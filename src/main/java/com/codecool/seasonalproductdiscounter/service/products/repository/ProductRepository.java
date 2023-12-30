@@ -8,5 +8,6 @@ public interface ProductRepository {
     List<Product> getAvailableProducts();
     boolean addProducts(List<Product> products);
     boolean setProductAsSold(Product product);
+    boolean setSoldToUnsold();
 }
 

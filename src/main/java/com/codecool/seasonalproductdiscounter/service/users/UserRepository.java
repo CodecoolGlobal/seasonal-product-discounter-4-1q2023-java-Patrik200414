@@ -11,4 +11,5 @@ public interface UserRepository {
     boolean addUser(User user);
     boolean changeUserName(User user, String userName);
     boolean changePassword(User user, String password);
+    boolean removeData();
 }

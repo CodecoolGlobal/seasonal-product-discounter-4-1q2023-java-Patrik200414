@@ -105,8 +105,8 @@ public class UserRepositoryImpl implements UserRepository{
         preparedStatement.setString(2, user.userName());
         preparedStatement.setString(3, user.password());
 
-        success = preparedStatement.execute();
-        return success;
+        preparedStatement.execute();
+        return true;
     }
 
     @Override
@@ -147,6 +147,21 @@ public class UserRepositoryImpl implements UserRepository{
         preparedStatement.setString(1, newData);
         preparedStatement.setInt(2, user.id());
         return preparedStatement.execute();
+    }
+
+    @Override
+    public boolean removeData() {
+        String sqlQuery = "DELETE FROM users;";
+        Connection connection = sqliteConnector.getConnection();
+        boolean success = false;
+        try{
+            Statement statement = connection.createStatement();
+            statement.execute(sqlQuery);
+            success = true;
+        } catch (SQLException e){
+            logger.logError(e.getMessage());
+        }
+        return success;
     }
 
 

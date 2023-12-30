@@ -57,7 +57,7 @@ public class Application {
         TransactionsSimulator simulator = new TransactionsSimulator(logger, userRepository, productRepository,
                 authenticationService, discounterService, transactionRepository);
 
-        //RunSimulation(simulator, productRepository, transactionRepository);
+        RunSimulation(simulator, productRepository, transactionRepository);
 
         System.out.println("Press any key to exit.");
         Scanner scanner = new Scanner(System.in);
@@ -80,14 +80,15 @@ public class Application {
         LocalDate date = LocalDate.now();
 
         // set your own condition
-        while (true) {
+        while (days < 1) {
             System.out.println("Starting simulation...");
-            simulator.run(new TransactionsSimulatorSettings(date, 100, 70));
+            simulator.run(new TransactionsSimulatorSettings(date, 10, 70));
 
             List<Transaction> transactions = transactionRepository.getAll();
             System.out.println(date + " ended, total transactions: " + transactions.size() + ", total income: "
                     + transactions.stream().mapToDouble(Transaction::pricePaid).sum());
             System.out.println("Products left to sell: " + productRepository.getAvailableProducts().size());
+            days++;
         }
     }
 
