@@ -7,5 +7,7 @@ import java.util.List;
 public interface TransactionRepository {
     boolean add(Transaction transaction);
     List<Transaction> getAll();
+
+    boolean removeData();
 }
 

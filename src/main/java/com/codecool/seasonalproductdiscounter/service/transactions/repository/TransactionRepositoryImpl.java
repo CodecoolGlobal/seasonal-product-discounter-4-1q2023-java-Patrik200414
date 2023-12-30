@@ -29,7 +29,8 @@ public class TransactionRepositoryImpl implements TransactionRepository{
         boolean success = false;
         try{
             logger.logInfo("A new transaction have been made! Transaction id: " + transaction.id());
-            success = addingTransactionSuccess(transaction, connection, sqlQuery);
+            addingTransactionSuccess(transaction, connection, sqlQuery);
+            success = true;
 
         } catch (SQLException e){
             logger.logError(e.getMessage());
@@ -103,5 +104,21 @@ public class TransactionRepositoryImpl implements TransactionRepository{
         boolean sold = resultSet.getInt("sold") == 1 ? true : false;
 
         return new Product(productId, productName, color, season, price, sold);
+    }
+
+    @Override
+    public boolean removeData() {
+        String sqlQuery = "DELETE FROM transactions;";
+        Connection connection = sqliteConnector.getConnection();
+        boolean success = false;
+
+        try{
+            Statement statement = connection.createStatement();
+            statement.execute(sqlQuery);
+            success = true;
+        } catch (SQLException e){
+            logger.logError(e.getMessage());
+        }
+        return success;
     }
 }
