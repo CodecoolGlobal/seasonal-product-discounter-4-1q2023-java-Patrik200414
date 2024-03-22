@@ -15,64 +15,62 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 public class ProductBrowserImpl implements ProductBrowser {
-    private final ProductProvider _provider;
+    private final ProductProvider provider;
 
-    public ProductBrowserImpl(ProductProvider provider) {
-        _provider = provider;
-    }
+    public ProductBrowserImpl(ProductProvider provider) { this.provider = provider;}
 
     public List<Product> getAll() {
-        return _provider.getProducts();
+        return provider.getProducts();
     }
 
     public List<Product> getByName(String name) {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .filter(p -> p.name().contains(name))
                 .collect(toList());
     }
 
     public List<Product> getByColor(Color color) {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .filter(p -> p.color() == color)
                 .collect(toList());
     }
 
     public List<Product> getBySeason(Season season) {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .filter(p -> p.season() == season)
                 .collect(toList());
     }
 
     public List<Product> getByPriceSmallerThan(double price) {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .filter(p -> p.price() < price)
                 .collect(toList());
     }
 
     public List<Product> getByPriceGreaterThan(double price) {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .filter(p -> p.price() > price)
                 .collect(Collectors.toList());
     }
 
     public List<Product> getByPriceRange(double minimumPrice, double maximumPrice) {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .filter(p -> p.price() > minimumPrice && p.price() < maximumPrice)
                 .collect(toList());
     }
 
     public Map<String, List<Product>> groupByName() {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .collect(groupingBy(Product::name));
     }
 
     public Map<Color, List<Product>> groupByColor() {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .collect(groupingBy(Product::color));
     }
 
     public Map<Season, List<Product>> groupBySeason() {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .collect(groupingBy(Product::season));
     }
 
@@ -85,7 +83,7 @@ public class ProductBrowserImpl implements ProductBrowser {
         PriceRange medium = new PriceRange(cheap.maximum(), cheap.maximum() + diff / 3);
         PriceRange expensive = new PriceRange(medium.maximum(), medium.maximum() + diff / 3);
 
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .collect(groupingBy(p -> {
                     if (cheap.contains(p.price())) {
                         return cheap;
@@ -99,39 +97,39 @@ public class ProductBrowserImpl implements ProductBrowser {
 
 
     private double getMinimumPrice() {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .mapToDouble(Product::price)
                 .min()
                 .orElse(0);
     }
 
     private double getMaximumPrice() {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .mapToDouble(Product::price)
                 .max()
                 .orElse(0);
     }
 
     public List<Product> orderByName() {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .sorted(Comparator.comparing(Product::name))
                 .collect(toList());
     }
 
     public List<Product> orderByColor() {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .sorted(Comparator.comparing(Product::color))
                 .collect(toList());
     }
 
     public List<Product> orderBySeason() {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .sorted(Comparator.comparing(Product::season))
                 .collect(toList());
     }
 
     public List<Product> orderByPrice() {
-        return _provider.getProducts().stream()
+        return provider.getProducts().stream()
                 .sorted(Comparator.comparing(Product::price))
                 .collect(toList());
     }
