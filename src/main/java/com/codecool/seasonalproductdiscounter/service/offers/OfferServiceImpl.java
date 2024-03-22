@@ -21,8 +21,8 @@ public class OfferServiceImpl implements OfferService {
     public List<Offer> getOffers(LocalDate date) {
         return productBrowser.getAll()
                 .stream()
-                .map(p -> discounterService.getOffer(p, date))
-                .filter(o -> !o.discounts().isEmpty())
+                .map(product -> discounterService.getOffer(product, date))
+                .filter(offer -> !offer.discounts().isEmpty())
                 .collect(Collectors.toList());
     }
 }

@@ -37,7 +37,7 @@ public class ProductRepositoryImpl implements ProductRepository{
     }
 
     private void avaibleProductsLogInfo(List<Product> avaibleProducts) {
-        if(avaibleProducts.size() > 0){
+        if(!avaibleProducts.isEmpty()){
             logger.logInfo("All available products have been collected (" + avaibleProducts.size() +")");
         } else{
             logger.logInfo("There is no available product in the database");
@@ -74,12 +74,12 @@ public class ProductRepositoryImpl implements ProductRepository{
         return insertionSuccess(products, successfullInsertionCount);
     }
 
-    private boolean insertionSuccess(List<Product> products, int successfullInsertionCount) {
-        if(successfullInsertionCount == products.size()){
+    private boolean insertionSuccess(List<Product> products, int successfulInsertionCount) {
+        if(successfulInsertionCount == products.size()){
             logger.logInfo("Every product was successfully inserted into the database");
             return true;
         } else{
-            logger.logError("Something went wrong!" + (products.size() - successfullInsertionCount) + " record have been lost!\nPlease try to insert the records again!");
+            logger.logError("Something went wrong!" + (products.size() - successfulInsertionCount) + " record have been lost!\nPlease try to insert the records again!");
             return false;
         }
     }
@@ -115,7 +115,7 @@ public class ProductRepositoryImpl implements ProductRepository{
         boolean updateSuccess = false;
 
         try{
-            updateSuccess = updatingTheSoldField(product, connection, sqlQuery, updateSuccess);
+            updateSuccess = updatingTheSoldField(product, connection, sqlQuery);
         } catch (SQLException e){
             logger.logError(e.getMessage());
         }
@@ -124,10 +124,10 @@ public class ProductRepositoryImpl implements ProductRepository{
         return updateSuccess;
     }
 
-    private boolean updatingTheSoldField(Product product, Connection connection, String sqlQuery, boolean updateSuccess) throws SQLException {
+    private boolean updatingTheSoldField(Product product, Connection connection, String sqlQuery) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
         preparedStatement.setInt(1, product.id());
-        updateSuccess = preparedStatement.execute();
+        boolean updateSuccess = preparedStatement.execute();
         logger.logInfo("Product " + product.id() + "|" + product.name() + " Has been sold!");
         return updateSuccess;
     }

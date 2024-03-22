@@ -4,10 +4,6 @@ import com.codecool.seasonalproductdiscounter.model.users.User;
 import com.codecool.seasonalproductdiscounter.service.logger.Logger;
 import com.codecool.seasonalproductdiscounter.service.users.UserRepository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
@@ -21,8 +17,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public boolean authenticate(User user) {
         logger.logInfo("Authenticating user!");
         User searchedUser = userRepository.getUserByUserName(user.userName());
-        boolean isValidUser = userChecking(user, searchedUser);
-        return isValidUser;
+        return userChecking(user, searchedUser);
     }
 
     private boolean userChecking(User user, User searchedUser) {

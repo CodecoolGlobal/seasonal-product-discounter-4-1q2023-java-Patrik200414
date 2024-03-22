@@ -79,8 +79,7 @@ public class UserRepositoryImpl implements UserRepository{
             String userName = resultSet.getString("user_name");
             String password = resultSet.getString("password");
 
-            User user = new User(id, userName, password);
-            searchedUser = user;
+            searchedUser = new User(id, userName, password);
         }
         return searchedUser;
     }
@@ -92,14 +91,14 @@ public class UserRepositoryImpl implements UserRepository{
         boolean success = false;
         try{
             logger.logInfo("Adding user to the database!");
-            success = addUserQuerySuccess(user, connection, sqlQuery, success);
+            success = addUserQuerySuccess(user, connection, sqlQuery);
         } catch (SQLException e){
             logger.logError(e.getMessage());
         }
         return success;
     }
 
-    private static boolean addUserQuerySuccess(User user, Connection connection, String sqlQuery, boolean success) throws SQLException {
+    private static boolean addUserQuerySuccess(User user, Connection connection, String sqlQuery) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
         preparedStatement.setInt(1, user.id());
         preparedStatement.setString(2, user.userName());

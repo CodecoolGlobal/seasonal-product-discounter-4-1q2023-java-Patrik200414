@@ -30,7 +30,15 @@ public class RandomProductGenerator implements ProductProvider {
         List<Product> result = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             Color color = getRandomColor();
-            result.add(new Product(i, getRandomName(color), color, getRandomSeason(), getRandomPrice(minimumPrice, maximumPrice), false));
+            Product newProduct = new Product(
+                    i,
+                    getRandomName(color),
+                    color,
+                    getRandomSeason(),
+                    getRandomPrice(minimumPrice, maximumPrice),
+                    false
+            );
+            result.add(newProduct);
         }
         return result;
     }
