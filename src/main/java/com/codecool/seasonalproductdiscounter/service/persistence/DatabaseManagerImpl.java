@@ -57,7 +57,6 @@ public class DatabaseManagerImpl implements DatabaseManager {
 
     private boolean executeQueries(Iterable<String> queries) {
         try {
-            //Complete the method
             Connection connection = sqliteConnector.getConnection();
             for(String query : queries){
                 Statement statement = connection.createStatement();

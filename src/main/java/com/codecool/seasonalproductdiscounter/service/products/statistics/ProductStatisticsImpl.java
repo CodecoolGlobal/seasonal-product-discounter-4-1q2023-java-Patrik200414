@@ -73,19 +73,19 @@ public class ProductStatisticsImpl implements ProductStatistics {
     @Override
     public Map<String, Integer> getCountByName() {
         return browser.getAll().stream()
-                .collect(groupingBy(Product::name, summingInt(p -> 1)));
+                .collect(groupingBy(Product::name, summingInt(product -> 1)));
     }
 
     @Override
     public Map<Color, Integer> getCountByColor() {
         return browser.getAll().stream()
-                .collect(groupingBy(Product::color, summingInt(p -> 1)));
+                .collect(groupingBy(Product::color, summingInt(product -> 1)));
     }
 
     @Override
     public Map<Season, Integer> getCountBySeason() {
         return browser.getAll().stream()
-                .collect(groupingBy(Product::season, summingInt(p -> 1)));
+                .collect(groupingBy(Product::season, summingInt(product -> 1)));
     }
 
     @Override
