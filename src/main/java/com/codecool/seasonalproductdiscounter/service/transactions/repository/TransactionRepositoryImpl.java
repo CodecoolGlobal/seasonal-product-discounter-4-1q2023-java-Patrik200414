@@ -101,7 +101,7 @@ public class TransactionRepositoryImpl implements TransactionRepository{
         Color color = Color.valueOf(resultSet.getString("color"));
         Season season = Season.valueOf(resultSet.getString("season"));
         double price = resultSet.getDouble("price");
-        boolean sold = resultSet.getInt("sold") == 1 ? true : false;
+        boolean sold = resultSet.getInt("sold") == 1;
 
         return new Product(productId, productName, color, season, price, sold);
     }
