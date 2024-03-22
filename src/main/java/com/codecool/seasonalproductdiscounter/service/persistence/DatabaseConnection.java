@@ -6,12 +6,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class SqliteConnector {
+public class DatabaseConnection {
 
     private final String dbFile;
     private final Logger logger;
 
-    public SqliteConnector(String dbFile, Logger logger) {
+    public DatabaseConnection(String dbFile, Logger logger) {
         this.dbFile = dbFile;
         this.logger = logger;
     }
@@ -19,7 +19,7 @@ public class SqliteConnector {
     public Connection getConnection() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:" + dbFile);
+            conn = DriverManager.getConnection(dbFile);
         } catch (SQLException e) {
             logger.logError(e.getMessage());
         }

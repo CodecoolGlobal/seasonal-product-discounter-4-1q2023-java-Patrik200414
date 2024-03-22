@@ -41,10 +41,10 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     TRANSACTIONS_TABLE_NAME);
 
     private final List<String> tableStatements;
-    private final SqliteConnector sqliteConnector;
+    private final DatabaseConnection sqliteConnector;
     private final Logger logger;
 
-    public DatabaseManagerImpl(SqliteConnector sqliteConnector, Logger logger) {
+    public DatabaseManagerImpl(DatabaseConnection sqliteConnector, Logger logger) {
         this.sqliteConnector = sqliteConnector;
         this.logger = logger;
         tableStatements = List.of(PRODUCTS_TABLE_STATEMENT, USERS_TABLE_STATEMENT, TRANSACTIONS_TABLE_STATEMENT);

@@ -3,7 +3,6 @@ package com.codecool.seasonalproductdiscounter;
 import com.codecool.seasonalproductdiscounter.model.products.Product;
 import com.codecool.seasonalproductdiscounter.model.transactions.Transaction;
 import com.codecool.seasonalproductdiscounter.model.transactions.TransactionsSimulatorSettings;
-import com.codecool.seasonalproductdiscounter.model.users.User;
 import com.codecool.seasonalproductdiscounter.service.authentication.AuthenticationService;
 import com.codecool.seasonalproductdiscounter.service.authentication.AuthenticationServiceImpl;
 import com.codecool.seasonalproductdiscounter.service.discounts.DiscountProvider;
@@ -14,7 +13,7 @@ import com.codecool.seasonalproductdiscounter.service.logger.ConsoleLogger;
 import com.codecool.seasonalproductdiscounter.service.logger.Logger;
 import com.codecool.seasonalproductdiscounter.service.persistence.DatabaseManager;
 import com.codecool.seasonalproductdiscounter.service.persistence.DatabaseManagerImpl;
-import com.codecool.seasonalproductdiscounter.service.persistence.SqliteConnector;
+import com.codecool.seasonalproductdiscounter.service.persistence.DatabaseConnection;
 import com.codecool.seasonalproductdiscounter.service.products.provider.RandomProductGenerator;
 import com.codecool.seasonalproductdiscounter.service.products.repository.ProductRepository;
 import com.codecool.seasonalproductdiscounter.service.products.repository.ProductRepositoryImpl;
@@ -24,8 +23,6 @@ import com.codecool.seasonalproductdiscounter.service.transactions.simulator.Tra
 import com.codecool.seasonalproductdiscounter.service.users.UserRepository;
 import com.codecool.seasonalproductdiscounter.service.users.UserRepositoryImpl;
 
-import java.io.Console;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -36,8 +33,8 @@ public class Application {
 
         Logger logger = new ConsoleLogger();
 
-        String dbFile = "src/main/resources/SeasonalProductDiscounter.db";
-        SqliteConnector sqliteConnector = new SqliteConnector(dbFile, logger);
+        String databaseConnectionUrl = System.getenv("DATABASE_URL");
+        DatabaseConnection sqliteConnector = new DatabaseConnection(databaseConnectionUrl, logger);
         sqliteConnector.getConnection();
 
         DatabaseManager dbManager = new DatabaseManagerImpl(sqliteConnector, logger);
