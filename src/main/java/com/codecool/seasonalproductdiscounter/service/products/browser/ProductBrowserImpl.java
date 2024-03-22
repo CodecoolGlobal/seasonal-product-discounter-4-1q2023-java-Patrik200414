@@ -25,37 +25,37 @@ public class ProductBrowserImpl implements ProductBrowser {
 
     public List<Product> getByName(String name) {
         return provider.getProducts().stream()
-                .filter(p -> p.name().contains(name))
+                .filter(product -> product.name().contains(name))
                 .collect(toList());
     }
 
     public List<Product> getByColor(Color color) {
         return provider.getProducts().stream()
-                .filter(p -> p.color() == color)
+                .filter(product -> product.color() == color)
                 .collect(toList());
     }
 
     public List<Product> getBySeason(Season season) {
         return provider.getProducts().stream()
-                .filter(p -> p.season() == season)
+                .filter(product -> product.season() == season)
                 .collect(toList());
     }
 
     public List<Product> getByPriceSmallerThan(double price) {
         return provider.getProducts().stream()
-                .filter(p -> p.price() < price)
+                .filter(product -> product.price() < price)
                 .collect(toList());
     }
 
     public List<Product> getByPriceGreaterThan(double price) {
         return provider.getProducts().stream()
-                .filter(p -> p.price() > price)
+                .filter(product -> product.price() > price)
                 .collect(Collectors.toList());
     }
 
     public List<Product> getByPriceRange(double minimumPrice, double maximumPrice) {
         return provider.getProducts().stream()
-                .filter(p -> p.price() > minimumPrice && p.price() < maximumPrice)
+                .filter(product -> product.price() > minimumPrice && product.price() < maximumPrice)
                 .collect(toList());
     }
 
@@ -84,10 +84,10 @@ public class ProductBrowserImpl implements ProductBrowser {
         PriceRange expensive = new PriceRange(medium.maximum(), medium.maximum() + diff / 3);
 
         return provider.getProducts().stream()
-                .collect(groupingBy(p -> {
-                    if (cheap.contains(p.price())) {
+                .collect(groupingBy(product -> {
+                    if (cheap.contains(product.price())) {
                         return cheap;
-                    } else if (medium.contains(p.price())) {
+                    } else if (medium.contains(product.price())) {
                         return medium;
                     } else {
                         return expensive;
