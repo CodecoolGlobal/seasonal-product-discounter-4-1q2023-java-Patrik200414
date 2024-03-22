@@ -1,11 +1,8 @@
 # seasonal-product-discounter
 
-In this project I had to imitate a clothing shop.
-The shop has different sales going by the product's color or by the specific season.
-The shop has different offers on the different items by the discounts.
-I had to simulate a day in the shop.
-The shop has items and users which are randomly generated.
-I use SQLite to store the users, products and the transactions that have been made.
+This project aims to simulate a clothing shop environment where various sales and discounts are offered based on product color and season. 
+It involves generating random users and items and simulating transactions for a day.
+Data is stored using SQLite.
 
 # Technologies Used
 - Java
@@ -14,12 +11,13 @@ I use SQLite to store the users, products and the transactions that have been ma
 - Junit
 
 # Overview
-The project uses plain java. It is a simulation project, where I simulate a specific scenario.
-With this project I practiced the OOP and SOLID principles. I also learned how to use SQL and how to connect with Java.
+The project is implemented in plain Java, serving as a simulation exercise for a specific retail scenario. 
+It focuses on practicing Object-Oriented Programming (OOP) and SOLID principles.
+Additionally, it provides learning opportunities in SQL integration with Java.
 
 # Challenges
-The biggest challenge to me was to create the different parts that I need to make the simulation work.
-Besides that a great challenge was to connect the database with java.
+The primary challenge encountered was creating the necessary components for the simulation to function effectively. 
+Additionally, integrating the database with Java posed a significant hurdle.
 
 # Setup Instructions
 Manual setup:
