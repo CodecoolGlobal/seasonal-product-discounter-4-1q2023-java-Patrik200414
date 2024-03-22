@@ -34,14 +34,14 @@ public class Application {
         Logger logger = new ConsoleLogger();
 
         String databaseConnectionUrl = System.getenv("DATABASE_URL");
-        DatabaseConnection sqliteConnector = new DatabaseConnection(databaseConnectionUrl, logger);
-        sqliteConnector.getConnection();
+        DatabaseConnection databaseConnection = new DatabaseConnection(databaseConnectionUrl, logger);
+        databaseConnection.getConnection();
 
-        DatabaseManager dbManager = new DatabaseManagerImpl(sqliteConnector, logger);
+        DatabaseManager dbManager = new DatabaseManagerImpl(databaseConnection, logger);
 
-        ProductRepository productRepository = new ProductRepositoryImpl(logger,sqliteConnector);
-        UserRepository userRepository = new UserRepositoryImpl(logger, sqliteConnector);
-        TransactionRepository transactionRepository = new TransactionRepositoryImpl(logger, sqliteConnector);
+        ProductRepository productRepository = new ProductRepositoryImpl(logger,databaseConnection);
+        UserRepository userRepository = new UserRepositoryImpl(logger, databaseConnection);
+        TransactionRepository transactionRepository = new TransactionRepositoryImpl(logger, databaseConnection);
 
         DiscountProvider discountProvider = new DiscountProviderImpl();
         DiscountService discounterService = new DiscountServiceImpl(discountProvider);
