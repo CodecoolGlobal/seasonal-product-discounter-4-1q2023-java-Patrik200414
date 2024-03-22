@@ -6,7 +6,7 @@ import com.codecool.seasonalproductdiscounter.model.products.Product;
 import com.codecool.seasonalproductdiscounter.model.transactions.Transaction;
 import com.codecool.seasonalproductdiscounter.model.users.User;
 import com.codecool.seasonalproductdiscounter.service.logger.Logger;
-import com.codecool.seasonalproductdiscounter.service.persistence.SqliteConnector;
+import com.codecool.seasonalproductdiscounter.service.persistence.DatabaseConnection;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -15,9 +15,9 @@ import java.util.List;
 
 public class TransactionRepositoryImpl implements TransactionRepository{
     private final Logger logger;
-    private final SqliteConnector sqliteConnector;
+    private final DatabaseConnection sqliteConnector;
 
-    public TransactionRepositoryImpl(Logger logger, SqliteConnector sqliteConnector) {
+    public TransactionRepositoryImpl(Logger logger, DatabaseConnection sqliteConnector) {
         this.logger = logger;
         this.sqliteConnector = sqliteConnector;
     }

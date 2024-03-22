@@ -2,7 +2,7 @@ package com.codecool.seasonalproductdiscounter.service.users;
 
 import com.codecool.seasonalproductdiscounter.model.users.User;
 import com.codecool.seasonalproductdiscounter.service.logger.Logger;
-import com.codecool.seasonalproductdiscounter.service.persistence.SqliteConnector;
+import com.codecool.seasonalproductdiscounter.service.persistence.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,9 +10,9 @@ import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository{
     private final Logger logger;
-    private final SqliteConnector sqliteConnector;
+    private final DatabaseConnection sqliteConnector;
 
-    public UserRepositoryImpl(Logger logger, SqliteConnector sqliteConnector) {
+    public UserRepositoryImpl(Logger logger, DatabaseConnection sqliteConnector) {
         this.logger = logger;
         this.sqliteConnector = sqliteConnector;
     }

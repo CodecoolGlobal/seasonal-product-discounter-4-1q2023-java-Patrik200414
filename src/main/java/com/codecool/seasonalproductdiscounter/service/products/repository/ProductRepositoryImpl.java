@@ -4,7 +4,7 @@ import com.codecool.seasonalproductdiscounter.model.enums.Color;
 import com.codecool.seasonalproductdiscounter.model.enums.Season;
 import com.codecool.seasonalproductdiscounter.model.products.Product;
 import com.codecool.seasonalproductdiscounter.service.logger.Logger;
-import com.codecool.seasonalproductdiscounter.service.persistence.SqliteConnector;
+import com.codecool.seasonalproductdiscounter.service.persistence.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,9 +12,9 @@ import java.util.List;
 
 public class ProductRepositoryImpl implements ProductRepository{
     private final Logger logger;
-    private final SqliteConnector sqliteConnector;
+    private final DatabaseConnection sqliteConnector;
 
-    public ProductRepositoryImpl(Logger logger, SqliteConnector sqliteConnector) {
+    public ProductRepositoryImpl(Logger logger, DatabaseConnection sqliteConnector) {
         this.logger = logger;
         this.sqliteConnector = sqliteConnector;
     }

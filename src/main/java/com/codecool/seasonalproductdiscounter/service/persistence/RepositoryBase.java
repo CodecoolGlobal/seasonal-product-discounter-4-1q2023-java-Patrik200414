@@ -5,10 +5,10 @@ import com.codecool.seasonalproductdiscounter.service.logger.Logger;
 public abstract class RepositoryBase {
 
     protected final String tableName;
-    protected final SqliteConnector sqliteConnector;
+    protected final DatabaseConnection sqliteConnector;
     protected final Logger logger;
 
-    public RepositoryBase(String tableName, SqliteConnector sqliteConnector, Logger logger) {
+    public RepositoryBase(String tableName, DatabaseConnection sqliteConnector, Logger logger) {
         this.tableName = tableName;
         this.sqliteConnector = sqliteConnector;
         this.logger = logger;
