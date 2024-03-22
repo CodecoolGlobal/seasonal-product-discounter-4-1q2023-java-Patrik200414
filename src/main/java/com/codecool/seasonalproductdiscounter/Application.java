@@ -67,7 +67,6 @@ public class Application {
 
     private static void initializeDatabase(ProductRepository productRepository) {
         if (productRepository.getAvailableProducts().isEmpty()) {
-            //Add products to the repo
             RandomProductGenerator randomProductGenerator = new RandomProductGenerator(1000, 20, 80);
             List<Product> randomProducts = randomProductGenerator.getProducts();
             productRepository.addProducts(randomProducts);
@@ -79,7 +78,6 @@ public class Application {
         int days = 0;
         LocalDate date = LocalDate.now();
 
-        // set your own condition
         while (days < 1) {
             System.out.println("Starting simulation...");
             simulator.run(new TransactionsSimulatorSettings(date, 10, 70));
