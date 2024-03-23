@@ -79,18 +79,18 @@ public class ProductBrowserImpl implements ProductBrowser {
         double maxPrice = getMaximumPrice();
         double diff = maxPrice - minPrice;
 
-        PriceRange cheap = new PriceRange(minPrice, minPrice + diff / 3);
-        PriceRange medium = new PriceRange(cheap.maximum(), cheap.maximum() + diff / 3);
-        PriceRange expensive = new PriceRange(medium.maximum(), medium.maximum() + diff / 3);
+        PriceRange low = new PriceRange(minPrice, Math.round(minPrice + diff / 3));
+        PriceRange medium = new PriceRange(low.maximum(), Math.round(low.maximum() + diff / 3));
+        PriceRange high = new PriceRange(medium.maximum(), Math.round(medium.maximum() + diff / 3));
 
         return provider.getProducts().stream()
                 .collect(groupingBy(product -> {
-                    if (cheap.contains(product.price())) {
-                        return cheap;
+                    if (low.contains(product.price())) {
+                        return low;
                     } else if (medium.contains(product.price())) {
                         return medium;
                     } else {
-                        return expensive;
+                        return high;
                     }
                 }));
     }
