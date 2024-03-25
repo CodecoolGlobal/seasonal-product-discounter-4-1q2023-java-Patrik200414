@@ -231,7 +231,7 @@ class ProductBrowserImplTest {
     }
 
     @Test
-    void groupByColor() {
+    void groupByColor_ShouldReturnAMapWithColorAsKeyAndListOfProductsAsValue_ShouldReturnExpectedMap() {
         List<Product> expectedProducts = List.of(
                 new Product(1, "Yellow shirt", Color.YELLOW, Season.SUMMER, 7, false),
                 new Product(2, "Red shirt", Color.RED, Season.SPRING, 10, true),
@@ -270,7 +270,7 @@ class ProductBrowserImplTest {
     }
 
     @Test
-    void groupBySeason() {
+    void groupBySeason_ShouldReturnAMapWithSeasonAsKeyAndListOfProductsAsValue_ShouldReturnExpectedMap() {
         List<Product> expectedProducts = List.of(
                 new Product(1, "Yellow shirt", Color.YELLOW, Season.SUMMER, 7, false),
                 new Product(2, "Red shirt", Color.RED, Season.SPRING, 10, true),
@@ -307,7 +307,7 @@ class ProductBrowserImplTest {
     }
 
     @Test
-    void groupByPriceRange() {
+    void groupByPriceRange_ShouldReturnAMapWithPriceRangeAsKeyAndListOfProductsAsValue_ShouldReturnExpectedMap() {
         List<Product> expectedProducts = List.of(
                 new Product(1, "Yellow shirt", Color.YELLOW, Season.SUMMER, 7, false),
                 new Product(2, "Red shirt", Color.RED, Season.SPRING, 10, true),
@@ -349,18 +349,108 @@ class ProductBrowserImplTest {
     }
 
     @Test
-    void orderByName() {
+    void orderByName_ShouldReturnTheCorrectOrderByTheProductName_ShouldReturnExpectedList() {
+        List<Product> expectedProducts = List.of(
+                new Product(1, "Yellow shirt", Color.YELLOW, Season.SUMMER, 7, false),
+                new Product(2, "Red shirt", Color.RED, Season.SPRING, 10, true),
+                new Product(3, "Blue shirt", Color.BLUE, Season.AUTUMN, 5, false),
+                new Product(4, "Green shirt", Color.GREEN, Season.SPRING, 11, false),
+                new Product(5, "Yellow shirt", Color.YELLOW, Season.SPRING, 3, false)
+        );
+        when(productProviderMock.getProducts()).thenReturn(
+                expectedProducts
+        );
+
+        ProductBrowser productBrowser = new ProductBrowserImpl(productProviderMock);
+
+        List<Product> result = productBrowser.orderByName();
+        List<Product> expected = List.of(
+                new Product(3, "Blue shirt", Color.BLUE, Season.AUTUMN, 5, false),
+                new Product(4, "Green shirt", Color.GREEN, Season.SPRING, 11, false),
+                new Product(2, "Red shirt", Color.RED, Season.SPRING, 10, true),
+                new Product(1, "Yellow shirt", Color.YELLOW, Season.SUMMER, 7, false),
+                new Product(5, "Yellow shirt", Color.YELLOW, Season.SPRING, 3, false)
+        );
+
+        assertArrayEquals(expected.toArray(), result.toArray());
     }
 
     @Test
-    void orderByColor() {
+    void orderByColor_ShouldReturnProductsOrderedByColor() {
+        List<Product> expectedProducts = List.of(
+                new Product(1, "Yellow shirt", Color.YELLOW, Season.SUMMER, 7, false),
+                new Product(2, "Red shirt", Color.RED, Season.SPRING, 10, true),
+                new Product(3, "Blue shirt", Color.BLUE, Season.AUTUMN, 5, false),
+                new Product(4, "Green shirt", Color.GREEN, Season.SPRING, 11, false),
+                new Product(5, "Yellow shirt", Color.YELLOW, Season.SPRING, 3, false)
+        );
+        when(productProviderMock.getProducts()).thenReturn(
+                expectedProducts
+        );
+
+        ProductBrowser productBrowser = new ProductBrowserImpl(productProviderMock);
+        List<Product> result = productBrowser.orderByColor();
+        List<Product> expected = List.of(
+                new Product(3, "Blue shirt", Color.BLUE, Season.AUTUMN, 5, false),
+                new Product(4, "Green shirt", Color.GREEN, Season.SPRING, 11, false),
+                new Product(2, "Red shirt", Color.RED, Season.SPRING, 10, true),
+                new Product(1, "Yellow shirt", Color.YELLOW, Season.SUMMER, 7, false),
+                new Product(5, "Yellow shirt", Color.YELLOW, Season.SPRING, 3, false)
+        );
+
+        assertArrayEquals(expected.toArray(), result.toArray());
     }
 
     @Test
-    void orderBySeason() {
+    void orderBySeason_ShouldReturnProductsOrderedBySeasonASCOrder_ShouldReturnExpected() {
+        List<Product> expectedProducts = List.of(
+                new Product(1, "Yellow shirt", Color.YELLOW, Season.SUMMER, 7, false),
+                new Product(2, "Red shirt", Color.RED, Season.SPRING, 10, true),
+                new Product(3, "Blue shirt", Color.BLUE, Season.AUTUMN, 5, false),
+                new Product(4, "Green shirt", Color.GREEN, Season.SPRING, 11, false),
+                new Product(5, "Yellow shirt", Color.YELLOW, Season.SPRING, 3, false)
+        );
+        when(productProviderMock.getProducts()).thenReturn(
+                expectedProducts
+        );
+
+        ProductBrowser productBrowser = new ProductBrowserImpl(productProviderMock);
+        List<Product> result = productBrowser.orderBySeason();
+        List<Product> expected = List.of(
+                new Product(2, "Red shirt", Color.RED, Season.SPRING, 10, true),
+                new Product(4, "Green shirt", Color.GREEN, Season.SPRING, 11, false),
+                new Product(5, "Yellow shirt", Color.YELLOW, Season.SPRING, 3, false),
+                new Product(1, "Yellow shirt", Color.YELLOW, Season.SUMMER, 7, false),
+                new Product(3, "Blue shirt", Color.BLUE, Season.AUTUMN, 5, false)
+        );
+
+        assertArrayEquals(expected.toArray(), result.toArray());
     }
 
     @Test
-    void orderByPrice() {
+    void orderByPrice_ShouldReturnProductsInPriceOrderASC_ShouldRetirnExpected() {
+        List<Product> expectedProducts = List.of(
+                new Product(1, "Yellow shirt", Color.YELLOW, Season.SUMMER, 7, false),
+                new Product(2, "Red shirt", Color.RED, Season.SPRING, 10, true),
+                new Product(3, "Blue shirt", Color.BLUE, Season.AUTUMN, 5, false),
+                new Product(4, "Green shirt", Color.GREEN, Season.SPRING, 11, false),
+                new Product(5, "Yellow shirt", Color.YELLOW, Season.SPRING, 3, false)
+        );
+        when(productProviderMock.getProducts()).thenReturn(
+                expectedProducts
+        );
+
+        ProductBrowser productBrowser = new ProductBrowserImpl(productProviderMock);
+
+        List<Product> result = productBrowser.orderByPrice();
+        List<Product> expected  = List.of(
+                new Product(5, "Yellow shirt", Color.YELLOW, Season.SPRING, 3, false),
+                new Product(3, "Blue shirt", Color.BLUE, Season.AUTUMN, 5, false),
+                new Product(1, "Yellow shirt", Color.YELLOW, Season.SUMMER, 7, false),
+                new Product(2, "Red shirt", Color.RED, Season.SPRING, 10, true),
+                new Product(4, "Green shirt", Color.GREEN, Season.SPRING, 11, false)
+        );
+
+        assertArrayEquals(expected.toArray(), result.toArray());
     }
 }
