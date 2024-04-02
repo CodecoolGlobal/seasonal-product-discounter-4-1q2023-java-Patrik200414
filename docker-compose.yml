@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    image: 'docker-seasonal-product-discounter:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=jdbc:postgresql://db:5432/compose-postgres?user=${DATABASE_USER}&password=${DATABASE_PASSWORD}
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
