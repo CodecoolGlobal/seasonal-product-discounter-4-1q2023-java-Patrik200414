@@ -43,16 +43,11 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.2.0</version>
                 <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.codecool.seasonalproductdiscounter.Application</mainClass>
-                        </manifest>
-                    </archive>
+                    <mainClass>com.codecool.seasonalproductdiscounter.Application</mainClass>
                 </configuration>
             </plugin>
         </plugins>

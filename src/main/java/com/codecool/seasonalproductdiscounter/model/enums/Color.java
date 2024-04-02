@@ -1,12 +1,12 @@
 package com.codecool.seasonalproductdiscounter.model.enums;
 
 public enum Color {
-    RED,
-    YELLOW,
-    GREEN,
     BLUE,
-    VIOLET,
+    BROWN,
+    GREEN,
     PINK,
-    BROWN
+    RED,
+    VIOLET,
+    YELLOW
 }
 
