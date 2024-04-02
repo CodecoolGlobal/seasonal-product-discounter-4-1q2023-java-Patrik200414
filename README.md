@@ -20,15 +20,20 @@ The primary challenge encountered was creating the necessary components for the 
 Additionally, integrating the database with Java posed a significant hurdle.
 
 # Setup Instructions
-Manual setup:
-- Clone the repo
-- Run the program from your IDE (You don't need to do any configuration)
+Manual Setup:
+- Clone the repository.
 
-Maven setup:
-- Clone the repo
-- Add `DATABASE_URL` environment variable
-  - export 'DATABASE_URL=jdbc:postgresql://localhost:5432/seasonal_product?user=<database user>&password=<database password>'
-- Build project
-  - mvn clean install
-- Run project
-  - mvn exec:java
+- Add the following environment variable:
+  - `DATABASE_URL`: `jdbc:postgresql://localhost:5432/<DATABASE_NAME>?user=<DATABASE_USER>&password=<DATABASE_PASSWORD>`
+
+- To build project run `mvn clean package` command.
+- To run project run `mvn exec:java` or `java -jar target/seasonal-product-discounter-1.0-SNAPSHOT.jar`
+
+Docker Setup:
+- Clone the repository.
+
+- Add the following environment variable:
+  - `DATABASE_USER`
+  - `DATABASE_PASSWORD`
+ 
+- To run project in docker run `docker-compose up` command
